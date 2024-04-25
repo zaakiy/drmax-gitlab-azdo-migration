@@ -45,7 +45,7 @@ If you're importing private repositories you need to configure [Service Endpoint
    3. Password/Token Key `YOUR GITLAB API TOKEN`
    4. Service connection name `AzDO migration` (or any other descriptive text)
 6. Click Save
-7. Click on your service endpoint and your identificator will be visible in the URL
+7. Click on your service endpoint and your identificator will be visible in the URL. Only the UUID portion is needed.
    `https://dev.azure.com/MYORG/MYPROJECT/_settings/adminservices?resourceId=**SERVICE_ENDPOINT**`
 8. You can remove the service endpoint once you're done importing your repositories.
 
