@@ -21,14 +21,7 @@ Migrates gitlab repositories with open merge requests from Gitlab to Azure DevOp
 ### Run Options
 
 
-| Name              | Type                  | Description                                                                                                                                                            |
-| ------------------- | ----------------------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--gitlab-token`  | string (**required**) | Gitlab API token with`api, write_repository` scope. Create access token [here](https://gitlab.com/-/profile/personal_access_tokens)                                    |
-| `--azdo-org`      | string (**required**) | Azure DevOps organization URL`https://dev.azure.com/MYORG`                                                                                                             |
-| `--azdo-token`    | string (**required**) | Azure DevOps Personal Access Token with`Code - Read, write, & manage` scope. Create one at `https://dev.azure.com/MYORG/_usersSettings/tokens`                         |
-| `--azdo-endpoint` | string (**optional**) | Azure DevOps service endpoint for gitlab. If you're importing private repositories you need to setup service endpoint for gitlab authentication. See below for details |
-| `--config`        | string (**optional**) | Project configuration file - see projects.example.json or [below](#config-file)                                                                                        |
-| `--recreate-repo` | bool (**optional**)   | If added, script will first try to delete repository in AzDO before it creates a new one.**Use with caution as the action is irreversible**                            |
+| `--custom-gitlab-api-url` | string (**optional**) | If specified, this will connect to a self-hosted GitLab instance instead of Gitlab.com. Format should be "https://gitlab.myorg.com/api/v4"                             |
 
 ### Service endpoint configuration
 
