@@ -23,6 +23,7 @@ var (
 	azdoToken           = kingpin.Flag("azdo-token", "Azure DevOps Personal Access Token").Required().String()
 	azdoServiceEndpoint = kingpin.Flag("azdo-endpoint", "Azure DevOps service endpoint for gitlab").Default("").String()
 	configFile          = kingpin.Flag("config", "Projects configuration file").Default("projects.json").String()
+	customGitlabApiUrl  = kingpin.Flag("custom-gitlab-api-url", "Self-Hosted GitLab instance. If specified, this will connect to a self-hosted GitLab instance instead of GitLab.com").Default("").String()
 	recreateRepository  = kingpin.Flag("recreate-repo", "If true, repository in azdo will be deleted first and created again. Use with caution").Default("false").Bool()
 	//SuggestionReplacer Regex to match gitlab suggestion schema so that it can be replaced to azdo schema
 	SuggestionReplacer = regexp.MustCompile("```suggestion:.*")
@@ -429,9 +430,17 @@ func initAzdo() (context.Context, git.Client) {
 }
 
 func initGitlab() *gitlab.Client {
-	gitlabClient, err := gitlab.NewClient(*gitlabToken)
-	if err != nil {
-		log.Fatal(err)
+	if *customGitlabApiUrl == "" {
+		gitlabClient, err := gitlab.NewClient(*gitlabToken)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return gitlabClient
 	}
-	return gitlabClient
+
+	gitlabClientCustom, errCustom := gitlab.NewClient(*gitlabToken, gitlab.WithBaseURL(*customGitlabApiUrl))
+	if errCustom != nil {
+		log.Fatal(errCustom)
+	}
+	return gitlabClientCustom
 }
